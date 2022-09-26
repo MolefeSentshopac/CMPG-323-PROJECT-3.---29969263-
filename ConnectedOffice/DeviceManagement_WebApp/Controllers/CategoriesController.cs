@@ -8,25 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Repository;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
-    {
-        
+    {       
         private readonly ICategoryRepository _categoryRepository;
 
         public CategoriesController(ICategoryRepository categoryRepository)
         {
-            
+          
             _categoryRepository = categoryRepository;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(_categoryRepository.GetAll());
+            // return View(await _context.Category.ToListAsync());
+            return View( _categoryRepository.GetAll());
         }
 
         // GET: Categories/Details/5
@@ -37,14 +36,14 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
+            //var category = await _context.Category.FirstOrDefaultAsync(m => m.CategoryId == id);
             var category = _categoryRepository.GetById(id);
-                
             if (category == null)
             {
                 return NotFound();
             }
-            return View(category);
 
+            return View(category);
         }
 
         // GET: Categories/Create
@@ -60,13 +59,9 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
-            if (ModelState.IsValid)
-            {
-                category.CategoryId = Guid.NewGuid();
-                _categoryRepository.Add(category);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
+            category.CategoryId = Guid.NewGuid();            
+            _categoryRepository.Add(category);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Edit/5
@@ -96,32 +91,23 @@ namespace DeviceManagement_WebApp.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _categoryRepository.Update(category);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.CategoryId))
-                    {
-                        return NotFound();
-
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _categoryRepository.Update(category);
             }
-            return View(category);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(category.CategoryId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
-                
-                
-       
-        
 
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
@@ -131,8 +117,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = _categoryRepository.GetById(id);
-              
+            var category = _categoryRepository.GetById(id.Value);
             if (category == null)
             {
                 return NotFound();
@@ -148,7 +133,6 @@ namespace DeviceManagement_WebApp.Controllers
         {
             var category = _categoryRepository.GetById(id);
             _categoryRepository.Remove(category);
-         
             return RedirectToAction(nameof(Index));
         }
 
