@@ -13,7 +13,7 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
     {       
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository; //Referenced the repository in all 3 controllers
 
         public CategoriesController(ICategoryRepository categoryRepository)
         {

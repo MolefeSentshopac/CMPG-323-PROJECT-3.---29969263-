@@ -13,7 +13,7 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class DevicesController : Controller
     {
-        
+        //Referenced all 3 repositories  instead of the context
         private readonly IDeviceRepository _deviceRepository;
         private readonly IZoneRepository _zoneRepository;
         private readonly ICategoryRepository _categoryRepository;
