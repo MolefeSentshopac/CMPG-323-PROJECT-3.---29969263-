@@ -4,6 +4,7 @@ using System;
 
 namespace DeviceManagement_WebApp.Repository
 {
+//This method is implemented by the Generic repository
     public interface IGenericRepository<T> where T : class
     {
         T GetById(Guid? id);

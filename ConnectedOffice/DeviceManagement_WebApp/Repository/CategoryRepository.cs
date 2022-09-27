@@ -7,10 +7,11 @@ using System.Linq;
 namespace DeviceManagement_WebApp.Repository
 {
    
-
+    //Created a Category repository class that i want data from 
     public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
+
     {
-        public CategoryRepository(ConnectedOfficeContext context) : base(context)
+        public CategoryRepository(ConnectedOfficeContext context) : base(context) //Created the CategoryRepository class that will inherit ICategoryRepository  
         {
         }
         public bool exists(Guid id)
@@ -18,7 +19,7 @@ namespace DeviceManagement_WebApp.Repository
             return _context.Zone.Any(e => e.ZoneId == id);
         }
 
-        public Category GetMostRecentCategory()
+        public Category GetMostRecentCategory() //then implemented the interface 
         {
             return _context.Category.OrderByDescending(category => category.DateCreated).FirstOrDefault();
         }

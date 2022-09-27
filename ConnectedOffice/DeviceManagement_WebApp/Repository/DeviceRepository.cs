@@ -6,9 +6,10 @@ using System.Linq;
 
 namespace DeviceManagement_WebApp.Repository
 {
+    //Created a Category repository class that i want data from 
     public class DeviceRepository : GenericRepository<Device>, IDeviceRepository
     {
-        public DeviceRepository(ConnectedOfficeContext context) : base(context)
+        public DeviceRepository(ConnectedOfficeContext context) : base(context) //Created the DeviceRepository class that will inherit IDeviceRepository  
         {
 
 
@@ -17,7 +18,7 @@ namespace DeviceManagement_WebApp.Repository
         {
             return _context.Zone.Any(e => e.ZoneId == id);
         }
-        public Device GetMostRecentDevice()
+        public Device GetMostRecentDevice()//then implemented the interface 
         {
            
             return _context.Device.Include(d => d.Category).Include(d => d.Zone).OrderByDescending(service => service.DateCreated).FirstOrDefault();
