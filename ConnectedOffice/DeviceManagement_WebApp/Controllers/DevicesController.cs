@@ -29,7 +29,7 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             // var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
-            var connectedOfficeContext = _deviceRepository.GetMostRecentDevice();
+            var connectedOfficeContext = _deviceRepository.GetAllDevice();
             return View( connectedOfficeContext);
         }
 

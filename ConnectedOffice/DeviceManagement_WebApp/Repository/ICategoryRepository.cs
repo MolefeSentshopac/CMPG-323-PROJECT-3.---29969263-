@@ -6,7 +6,7 @@ namespace DeviceManagement_WebApp.Repository
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
-        bool exists(Guid id); //Implemented inheritence used GUID Aas datatype
+        bool exists(Guid id); //Implemented inheritence used GUID As datatype
         Category GetMostRecentCategory();
     }
 }

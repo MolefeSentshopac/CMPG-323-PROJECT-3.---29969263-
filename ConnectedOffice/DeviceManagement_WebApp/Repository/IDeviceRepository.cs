@@ -1,5 +1,6 @@
 ﻿using DeviceManagement_WebApp.Models;
 using System;
+using System.Collections.Generic;
 
 namespace DeviceManagement_WebApp.Repository
 {
@@ -8,6 +9,7 @@ namespace DeviceManagement_WebApp.Repository
     {
         bool exists(Guid id); //added Guid as a datatype instead of int
         Device GetMostRecentDevice();
+        IEnumerable<Device> GetAllDevice();
         Device GetDeviceById(Guid id); //added Guid as a datatype instead of int
     }
 }
